@@ -6,32 +6,32 @@ import type { AgencyProfile, DemoBrief, TripRunRecord } from "@/types/travel";
 
 const agents = [
   {
-    name: "Creative Director",
-    role: "Keeps every proposal premium, specific, and socially magnetic.",
+    name: "Chief of Staff",
+    role: "Converts competing signals into one decisive operating posture.",
   },
   {
-    name: "Destination Researcher",
-    role: "Maps the season, neighborhoods, friction points, and signature experiences.",
+    name: "Revenue Operator",
+    role: "Brings pipeline quality, expansion pressure, and forecast realism into the brief.",
   },
   {
-    name: "Flight & Stay Planner",
-    role: "Designs the routing and hotel stack so the luxury never breaks.",
+    name: "Delivery Lead",
+    role: "Surfaces staffing strain, launch risk, and utilization bottlenecks before they spill over.",
   },
   {
-    name: "Itinerary Architect",
-    role: "Turns raw intel into a day-by-day sequence with emotional pacing.",
+    name: "Finance Controller",
+    role: "Protects margin, cash discipline, and billing visibility across the plan.",
   },
   {
-    name: "Offer Composer",
-    role: "Packages the trip into a quote, email, and close-ready proposal.",
+    name: "People Ops Lead",
+    role: "Balances hiring pressure, onboarding capacity, and team health against growth plans.",
   },
   {
-    name: "Social Growth Producer",
-    role: "Cuts the trip into captions, hooks, and launch copy that can travel on its own.",
+    name: "Support Recovery",
+    role: "Keeps escalations, SLA breaches, and client risk visible in executive decisions.",
   },
   {
-    name: "Concierge QA",
-    role: "Pressure-tests tone, feasibility, and spend before anything ships.",
+    name: "Executive QA",
+    role: "Stress-tests the final brief so leadership can act on it without ambiguity.",
   },
 ];
 
@@ -67,9 +67,9 @@ export function LandingPage({
         <div className="mx-auto flex max-w-7xl flex-col gap-14">
           <header className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p className="font-display text-2xl text-[color:var(--paper)]">Velora Voyages Swarm</p>
+              <p className="font-display text-2xl text-[color:var(--paper)]">Aperture Ops Company OS</p>
               <p className="mt-2 max-w-xl text-sm text-[color:var(--sand-muted)]">
-                A GitHub-ready travel agency demo where seven specialist agents turn a luxury brief into itinerary, quote, and launch content.
+                A GitHub-ready company operations demo where specialist agents turn executive ambiguity into one clear operating brief.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -92,13 +92,13 @@ export function LandingPage({
             <div className="space-y-8">
               <div className="space-y-5">
                 <p className="inline-flex rounded-full border border-[color:var(--copper)]/35 bg-[color:var(--copper)]/12 px-4 py-2 text-xs uppercase tracking-[0.34em] text-[color:var(--sand-muted)]">
-                  Luxury-Adventure Agency Demo
+                  Executive Operations Demo
                 </p>
                 <h1 className="font-display max-w-4xl text-6xl leading-[0.92] text-[color:var(--paper)] sm:text-7xl lg:text-[5.4rem]">
-                  Build the travel repo people star, clone, and repost.
+                  Build the company-OS repo people star, clone, and study.
                 </h1>
                 <p className="max-w-2xl text-lg leading-8 text-[color:var(--sand-muted)]">
-                  {profile.tagline} This repo shows the whole stack: premium brand system, Ollama-powered orchestration, persistent run history, and a live control room that feels closer to a boutique concierge desk than a generic AI demo.
+                  {profile.tagline} This repo shows the whole stack: premium executive brand system, Claude-ready orchestration, persistent run history, and a live control room that feels closer to a board-prep surface than a generic AI demo.
                 </p>
               </div>
 
@@ -152,15 +152,15 @@ export function LandingPage({
               <ol className="mt-6 space-y-5 text-sm leading-7 text-[color:var(--paper)]">
                 <li>
                   <span className="font-display text-2xl">01</span>
-                  <p className="mt-2">Drop in a traveler brief or pick a seeded scenario like Maldives honeymoon.</p>
+                  <p className="mt-2">Drop in an operating scenario or pick a seeded leadership brief like quarterly planning reset.</p>
                 </li>
                 <li>
                   <span className="font-display text-2xl">02</span>
-                  <p className="mt-2">Watch the agent swarm stream research, routing, itinerary, quoting, and growth copy live.</p>
+                  <p className="mt-2">Watch the specialist swarm stream revenue, delivery, finance, people, support, and growth analysis live.</p>
                 </li>
                 <li>
                   <span className="font-display text-2xl">03</span>
-                  <p className="mt-2">Open the final run page and export the itinerary as markdown or a browser-generated PDF.</p>
+                  <p className="mt-2">Open the final run page and export the executive brief as markdown or a browser-generated PDF.</p>
                 </li>
               </ol>
             </div>
@@ -173,7 +173,7 @@ export function LandingPage({
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
               <p className="section-kicker">Agent Team</p>
-              <h2 className="section-title text-[color:var(--ink)]">A full travel agency profile, split into real roles.</h2>
+              <h2 className="section-title text-[color:var(--ink)]">A full company operating office, split into real roles.</h2>
             </div>
             <p className="max-w-2xl text-sm leading-7 text-[color:var(--muted)]">
               Each agent receives structured context, writes back into the shared workspace, and leaves a trace the UI can replay or persist.
@@ -298,7 +298,7 @@ npm run dev`}</code>
             <ul className="mt-6 space-y-4 text-sm leading-7 text-[color:var(--sand-muted)]">
               <li>Premium editorial design direction instead of generic dashboard chrome.</li>
               <li>Agent traces that make the intelligence visible and replayable.</li>
-              <li>Seeded travel scenarios that instantly tell a story on socials, demos, and README screenshots.</li>
+              <li>Seeded operating scenarios that instantly explain the product on socials, demos, and README screenshots.</li>
               <li>Persistent outputs you can open, print, and share after each run.</li>
             </ul>
             <div className="mt-8 flex flex-wrap gap-3">

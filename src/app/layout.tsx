@@ -13,9 +13,9 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Velora Voyages Swarm",
+  title: "Aperture Ops Company OS",
   description:
-    "A luxury-travel agent swarm built on Next.js, Prisma, SQLite, and Ollama-powered Kimi models.",
+    "A premium internal company operating system demo for a 30-person AI operations agency powered by Claude-ready orchestration.",
 };
 
 export default function RootLayout({

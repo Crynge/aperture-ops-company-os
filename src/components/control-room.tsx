@@ -164,7 +164,7 @@ export function ControlRoom({
 
     if (!response.ok || !response.body) {
       setStreaming(false);
-      setErrorMessage("The travel swarm endpoint did not return a readable stream.");
+      setErrorMessage("The operating-brief endpoint did not return a readable stream.");
       return;
     }
 
@@ -214,7 +214,7 @@ export function ControlRoom({
       <section className="rounded-[2rem] border border-[color:var(--ink)]/10 bg-[color:var(--paper)]/85 p-6 shadow-[0_22px_56px_rgba(12,17,22,0.08)] backdrop-blur">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="section-kicker">Agency Control Room</p>
+            <p className="section-kicker">Executive Control Room</p>
             <h1 className="section-title text-[color:var(--ink)]">Drive the {agencyName} swarm from one brief.</h1>
           </div>
           <button
@@ -288,7 +288,7 @@ export function ControlRoom({
               <input value={form.occasion} onChange={(event) => setForm({ ...form, occasion: event.target.value })} />
             </label>
             <label className="field-shell">
-              <span>Travelers</span>
+              <span>Teams Involved</span>
               <input value={form.travelers} onChange={(event) => setForm({ ...form, travelers: event.target.value })} />
             </label>
             <label className="field-shell">
@@ -296,7 +296,7 @@ export function ControlRoom({
               <input value={form.origin} onChange={(event) => setForm({ ...form, origin: event.target.value })} />
             </label>
             <label className="field-shell">
-              <span>Travel Month</span>
+              <span>Planning Window</span>
               <input value={form.travelMonth} onChange={(event) => setForm({ ...form, travelMonth: event.target.value })} />
             </label>
             <label className="field-shell">
@@ -320,7 +320,7 @@ export function ControlRoom({
               />
             </label>
             <label className="field-shell md:col-span-2">
-              <span>Destinations (comma separated)</span>
+              <span>Functions In Scope (comma separated)</span>
               <input value={form.destinations} onChange={(event) => setForm({ ...form, destinations: event.target.value })} />
             </label>
             <label className="field-shell md:col-span-2">

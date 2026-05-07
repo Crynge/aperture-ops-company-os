@@ -11,8 +11,8 @@ export default async function ControlRoomPage() {
       <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="section-kicker">Travel Agency Swarm</p>
-            <h1 className="section-title text-[color:var(--paper)]">Control room for live itinerary runs.</h1>
+            <p className="section-kicker">Company OS</p>
+            <h1 className="section-title text-[color:var(--paper)]">Control room for live operating-brief runs.</h1>
           </div>
           <Link
             href="/"

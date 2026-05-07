@@ -76,6 +76,71 @@ function mapRun(run: RunWithTraceEvents): CompanyRunRecord {
   };
 }
 
+function toLegacyProfile(profile: CompanyProfile) {
+  return {
+    ...profile,
+    signatureDestinations: profile.serviceLines,
+  };
+}
+
+function toLegacyBrief(scenario: OperatingScenario) {
+  return {
+    slug: scenario.slug,
+    title: scenario.title,
+    blurb: scenario.blurb,
+    brief: {
+      clientName: scenario.title,
+      occasion: scenario.brief.trigger,
+      travelers: scenario.brief.teamSize.toString(),
+      origin: "Executive Office",
+      travelMonth: scenario.brief.timeframe,
+      durationNights: 7,
+      budgetUsd: scenario.systems.finance.cashOnHandUsd,
+      destinations: scenario.brief.priorities,
+      priorities: scenario.brief.priorities,
+      avoid: scenario.brief.constraints,
+      style: "board-ready",
+      notes: scenario.brief.notes,
+    },
+    systems: scenario.systems,
+  };
+}
+
+function toLegacyRun(run: CompanyRunRecord) {
+  return {
+    ...run,
+    tripPlan: {
+      tripTitle: run.executiveBrief?.summary ?? run.title,
+      overview:
+        run.executiveBrief?.companyState ??
+        run.workspace.directivePlan?.operatingPosture ??
+        run.executiveBrief?.summary ??
+        "Executive brief will appear once the run completes.",
+      days: [] as Array<{
+        day: number;
+        title: string;
+        stay: string;
+        morning: string;
+        afternoon: string;
+        evening: string;
+        highlight: string;
+      }>,
+      markdown: run.executiveBrief?.markdown ?? "",
+    },
+    quoteDraft: {
+      headline: run.revenuePlan?.summary ?? "Operating plan ready",
+      investmentRangeUsd: run.financeSnapshot?.marginOutlook ?? "See finance snapshot for commercial implications.",
+      inclusions: run.revenuePlan?.next30Days ?? run.workspace.directivePlan?.prioritySequence ?? [],
+      emailDraft: run.executiveBrief?.boardStyleMemo ?? run.executiveBrief?.summary ?? "",
+    },
+    campaignPack: {
+      hookLine: run.growthPlan?.positioningShift ?? run.executiveBrief?.summary ?? "Messaging pack pending",
+      instagramCaptions: run.growthPlan?.campaignPriorities ?? run.growthPlan?.next30Days ?? [],
+      tiktokHooks: run.growthPlan?.demandGenerationMoves ?? run.growthPlan?.next30Days ?? [],
+    },
+  };
+}
+
 export async function resetDemoData() {
   await prisma.traceEvent.deleteMany();
   await prisma.companyRun.deleteMany();
@@ -122,6 +187,10 @@ export async function getCompanyProfile(slug = apertureProfile.slug): Promise<Co
   return parseJson(record.data, apertureProfile);
 }
 
+export async function getAgencyProfile() {
+  return toLegacyProfile(await getCompanyProfile());
+}
+
 export async function listOperatingScenarios(): Promise<OperatingScenario[]> {
   await ensureDemoData();
 
@@ -143,6 +212,10 @@ export async function listOperatingScenarios(): Promise<OperatingScenario[]> {
       systems: parsed.systems,
     };
   });
+}
+
+export async function listDemoBriefs() {
+  return (await listOperatingScenarios()).map(toLegacyBrief);
 }
 
 export async function createCompanyRun(input: {
@@ -254,6 +327,11 @@ export async function getCompanyRun(runId: string) {
   return mapRun(run);
 }
 
+export async function getTripRun(runId: string) {
+  const run = await getCompanyRun(runId);
+  return run ? toLegacyRun(run) : null;
+}
+
 export async function listLatestRuns(limit = 6) {
   const runs = await prisma.companyRun.findMany({
     take: limit,
@@ -276,12 +354,18 @@ export async function getDashboardData() {
       listLatestRuns(4),
     ]);
 
-    return { profile, scenarios, runs };
+    return {
+      profile: toLegacyProfile(profile),
+      scenarios,
+      briefs: scenarios.map(toLegacyBrief),
+      runs: runs.map(toLegacyRun),
+    };
   } catch {
     return {
-      profile: apertureProfile,
+      profile: toLegacyProfile(apertureProfile),
       scenarios: operatingScenarios,
-      runs: [] as CompanyRunRecord[],
+      briefs: operatingScenarios.map(toLegacyBrief),
+      runs: [],
     };
   }
 }

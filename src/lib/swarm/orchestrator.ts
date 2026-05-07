@@ -16,6 +16,7 @@ import {
   mockRevenuePlan,
   mockSupportPlan,
 } from "@/lib/swarm/mock";
+import { operatingScenarios } from "@/lib/demo-data";
 import {
   deliveryPlanSchema,
   directivePlanSchema,
@@ -744,4 +745,58 @@ export async function generateExecutiveReportForRun(runId: string) {
   });
 
   return executiveBrief;
+}
+
+export async function runTravelSwarm(input: {
+  brief: {
+    clientName: string;
+    occasion: string;
+    travelers: string;
+    origin: string;
+    travelMonth: string;
+    durationNights: number;
+    budgetUsd: number;
+    destinations: string[];
+    priorities: string[];
+    avoid: string[];
+    style: string;
+    notes: string;
+  };
+  profileSlug?: string;
+  emit: Emit;
+}) {
+  const scenario = operatingScenarios[0];
+
+  return runCompanyWorkflow({
+    profileSlug: input.profileSlug,
+    systems: scenario.systems,
+    brief: {
+      scenarioTitle: input.brief.clientName,
+      trigger: input.brief.occasion,
+      timeframe: input.brief.travelMonth,
+      teamSize: Number(input.brief.travelers) || scenario.brief.teamSize,
+      activeClients: scenario.brief.activeClients,
+      priorities: input.brief.priorities,
+      constraints: input.brief.avoid,
+      leadershipQuestion: input.brief.notes,
+      notes: [
+        `Origin context: ${input.brief.origin}`,
+        `Style: ${input.brief.style}`,
+        `Functions in scope: ${input.brief.destinations.join(", ")}`,
+        `Budget context: ${input.brief.budgetUsd}`,
+      ].join(" | "),
+    },
+    emit: input.emit,
+  });
+}
+
+export async function generateCampaignForRun(runId: string) {
+  const run = await getCompanyRun(runId);
+  const executiveBrief = await generateExecutiveReportForRun(runId);
+
+  return {
+    hookLine: run?.growthPlan?.positioningShift ?? executiveBrief.summary,
+    instagramCaptions: run?.growthPlan?.campaignPriorities ?? run?.growthPlan?.next30Days ?? [],
+    tiktokHooks: run?.growthPlan?.demandGenerationMoves ?? run?.growthPlan?.next30Days ?? [],
+  };
 }

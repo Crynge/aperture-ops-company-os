@@ -520,5 +520,11 @@ Aperture Ops converts a noisy company into one clear operating rhythm.
 - Sequence hiring behind constrained delivery and support teams, not across the board.
 - Protect cash by accelerating receivables and tightening proposal-to-handoff quality.
 - Reduce launch strain before expanding commitments in the next 30 days.
-`,
+  `,
+};
+
+export const landingCampaignPreview = {
+  hookLine: "Turn company ambiguity into one operating posture.",
+  landingPageBlurb:
+    "Aperture Ops gives leadership one control room for revenue, delivery, finance, people, support, and growth decisions.",
 };
