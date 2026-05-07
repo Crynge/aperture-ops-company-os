@@ -26,6 +26,8 @@ type RunWithTraceEvents = Prisma.CompanyRunGetPayload<{
   };
 }>;
 
+let ensureDemoDataPromise: Promise<void> | null = null;
+
 const emptyWorkspace = (
   brief: OperatingBrief,
   systems: CompanySystemsSnapshot,
@@ -147,8 +149,20 @@ export async function resetDemoData() {
   await prisma.scenarioRecord.deleteMany();
   await prisma.companyProfileRecord.deleteMany();
 
-  await prisma.companyProfileRecord.create({
-    data: {
+  await seedDemoData();
+}
+
+async function seedDemoData() {
+  await prisma.companyProfileRecord.upsert({
+    where: {
+      slug: apertureProfile.slug,
+    },
+    update: {
+      version: apertureProfile.version,
+      name: apertureProfile.name,
+      data: stringifyJson(apertureProfile),
+    },
+    create: {
       slug: apertureProfile.slug,
       version: apertureProfile.version,
       name: apertureProfile.name,
@@ -156,25 +170,46 @@ export async function resetDemoData() {
     },
   });
 
-  await prisma.scenarioRecord.createMany({
-    data: operatingScenarios.map((scenario) => ({
-      slug: scenario.slug,
-      title: scenario.title,
-      blurb: scenario.blurb,
-      data: stringifyJson({
-        brief: scenario.brief,
-        systems: scenario.systems,
-      }),
-    })),
-  });
+  for (const scenario of operatingScenarios) {
+    await prisma.scenarioRecord.upsert({
+      where: {
+        slug: scenario.slug,
+      },
+      update: {
+        title: scenario.title,
+        blurb: scenario.blurb,
+        data: stringifyJson({
+          brief: scenario.brief,
+          systems: scenario.systems,
+        }),
+      },
+      create: {
+        slug: scenario.slug,
+        title: scenario.title,
+        blurb: scenario.blurb,
+        data: stringifyJson({
+          brief: scenario.brief,
+          systems: scenario.systems,
+        }),
+      },
+    });
+  }
 }
 
 export async function ensureDemoData() {
-  const profileCount = await prisma.companyProfileRecord.count();
+  if (!ensureDemoDataPromise) {
+    ensureDemoDataPromise = (async () => {
+      const profileCount = await prisma.companyProfileRecord.count();
 
-  if (profileCount === 0) {
-    await resetDemoData();
+      if (profileCount === 0) {
+        await seedDemoData();
+      }
+    })().finally(() => {
+      ensureDemoDataPromise = null;
+    });
   }
+
+  await ensureDemoDataPromise;
 }
 
 export async function getCompanyProfile(slug = apertureProfile.slug): Promise<CompanyProfile> {

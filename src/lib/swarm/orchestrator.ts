@@ -31,16 +31,10 @@ import { sleep, titleFromOperatingBrief } from "@/lib/utils";
 import type {
   AgentKey,
   CompanySystemsSnapshot,
-  DeliveryPlan,
   ExecutiveBrief,
-  FinanceSnapshot,
-  GrowthPlan,
-  HiringPlan,
   OperatingBrief,
   OpsWorkspace,
-  RevenuePlan,
   StreamEvent,
-  SupportPlan,
 } from "@/types/company";
 import type { z } from "zod";
 
@@ -386,7 +380,7 @@ export async function runCompanyWorkflow(input: {
       },
     });
 
-    const hiring = await runAgent({
+    await runAgent({
       runId: created.id,
       stepIndex: 5,
       agentKey: "people-ops-lead",
@@ -430,7 +424,7 @@ export async function runCompanyWorkflow(input: {
       },
     });
 
-    const support = await runAgent({
+    await runAgent({
       runId: created.id,
       stepIndex: 6,
       agentKey: "support-ops-lead",
@@ -475,7 +469,7 @@ export async function runCompanyWorkflow(input: {
       },
     });
 
-    const growth = await runAgent({
+    await runAgent({
       runId: created.id,
       stepIndex: 7,
       agentKey: "growth-ops-lead",
